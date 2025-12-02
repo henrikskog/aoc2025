@@ -1,16 +1,15 @@
-example = ".".join(open("example1.txt").readlines()).split(",")
+example = ".".join(open("input2.txt").readlines()).split(",")
 
 
 def invalidId(s: str) -> bool:
-    return len(set(list(s))) != len(list(s))
-    t = 0
-    for s1 in range(len(s)):
-        for s2 in range(len(s)):
-            if s[s1] == s[s2]:
-                t+=1
-    if t > 1:
-        return True
+    for s1 in range(1, len(s)):
+        ss = s[0:s1]
+        spl = s.split(ss)
+        print(f"{ss}+{spl}")
+        if all([a == "" for a in spl]):
+            return True
     return False
+        
         
 def invalidIdsInRange(a: int, b: int) -> int:
     t=0 
@@ -30,4 +29,5 @@ def main():
         t += invalidIdsInRange(int(a),int(b))
     print(t)
 
+# print(invalidId("12"))
 main()
