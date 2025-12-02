@@ -24,7 +24,7 @@
   (let [[a b] (str/split range-str #"-")]
     [(Long/parseLong a) (Long/parseLong b)]))
 
-(defn main []
+(defn -main [& args]
   (let [input (str/trim (slurp "input.txt"))
         ranges (str/split input #",")
         result (reduce (fn [sum range-str]
@@ -33,5 +33,3 @@
                        0
                        ranges)]
     (println result)))
-
-(main)
