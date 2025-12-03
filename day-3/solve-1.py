@@ -6,22 +6,62 @@ def pos(a: set, i: int) -> int:
             return x
     return -1
 
-def jolt(line: str) -> int:
-    s = set([int(x) for x in set(list(line))])
-    c = s.copy()
+def largest(l: list[int]) -> int:
+    b = -1
+    i = 0
+    for x in range(len(l)):
+        n = l[x]
+        if n > b:
+            b = n
+            i = x
+    return i
 
-    a = max(list(s)[0:len(s)-1])
-    s.remove(a)
-    b = max(s)
+def jolt(s: list[int]) -> int:
 
-    if pos(c, a) < pos(c, b):
-        return int(str(a) + str(b))
 
-    return int(str(b) + str(a))
+    b = max(s[0:len(s)-1])
+    print(b)
+
+
+    fi = -1
+    for i in range(len(s)-1):
+        if s[i] == b:
+            print(s[i], i, b)
+            fi = i
+            break
+
+    assert(fi != -1)
+
+    # sb = set(s[])
+    # sb.remove(b)
+    nb = max(s[fi+1:])
+
+    print(nb)
+
+    si = -1
+    for i in range(fi+1, len(s)):
+        if s[i] == nb:
+            print(s[i], i, nb)
+            si = i
+
+        
+    assert(si != -1)
+
+    r = int(str(b) + str(nb))
+
+    # latest is the biggest
+    last = s[-1]
+    if last > r:
+        return last
+
+    return r
 
 
 t = 0
 for x in i:
-    # print(x, jolt(x))
-    t += jolt(x)
+    l = [int(a) for a in x]
+    print(x)
+    j = jolt(l)
+    print(x, j)
+    t += j
 print(t)
