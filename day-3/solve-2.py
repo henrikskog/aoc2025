@@ -65,10 +65,15 @@ for _s in inp:
     print(_s)
     s = [int(x) for x in _s]
     r = []
-    ci = 0
+    ci = -1
     for x in range(num):
-        b = largest(s[ci+1:len(s)-num]) + ci
-        r.append(s[b])
+        f = ci+1
+        t = len(s)-num
+        rem = s[f:t]
+        print("rem", rem, f, t)
+        b = largest(rem)
+        print('l idx', b)
+        r.append(s[b+ci+1])
         print(b, r)
         ci=b
 
