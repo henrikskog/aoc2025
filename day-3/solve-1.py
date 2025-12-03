@@ -10,7 +10,7 @@ def jolt(line: str) -> int:
     s = set([int(x) for x in set(list(line))])
     c = s.copy()
 
-    a = max(s)
+    a = max(list(s)[0:len(s)-1])
     s.remove(a)
     b = max(s)
 
@@ -25,5 +25,3 @@ for x in i:
     # print(x, jolt(x))
     t += jolt(x)
 print(t)
-
-
