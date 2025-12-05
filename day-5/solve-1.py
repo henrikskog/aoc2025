@@ -22,21 +22,21 @@ print(r)
 r = sorted(r, key=lambda x: x[0])
 print(r)
 
-print("opt")
-x = 0
-while x < len(r)-1:
-    if r[x+1][0] <= r[x][1]:
-        # print("overlap", r[x], r[x+1])
-        # print(r)
-        n = [r[x][0], r[x+1][1]]
-        # print(n)
-        r.insert(x+2, n)
-        # print(r)
-        r.pop(x)
-        # print(r)
-        r.pop(x)
-        # print(r)
-    x+=1
+# print("opt")
+# x = 0
+# while x < len(r)-1:
+#     if r[x+1][0] <= r[x][1]:
+#         # print("overlap", r[x], r[x+1])
+#         # print(r)
+#         n = [r[x][0], r[x+1][1]]
+#         # print(n)
+#         r.insert(x+2, n)
+#         # print(r)
+#         r.pop(x)
+#         # print(r)
+#         r.pop(x)
+#         # print(r)
+#     x+=1
 
 
 t = 0
