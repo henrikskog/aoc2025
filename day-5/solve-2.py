@@ -1,4 +1,4 @@
-inp = [x.strip() for x in open("day-5/input1.txt").readlines()]
+inp = [x.strip() for x in open("day-5/input1.txt").readlines()] # same input part 2
 
 r: list[list[int]] = []
 
@@ -52,7 +52,7 @@ while x < len(r)-1:
 
 t = 0
 for x in r:
-    t += x[1] - x[0]
+    t += x[1] - x[0]+1
         
 print(t)
 
