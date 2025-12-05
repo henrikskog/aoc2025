@@ -1,0 +1,12 @@
+*.class
+*.log
+*.jar
+target/
+.lein-failures
+.lein-repl-history
+.lein-plugins/
+.nrepl-port
+.cpcache/
+.idea/
+.vscode/
+*.iml
