@@ -10,6 +10,16 @@ def matrix_turn_90(m: list[list[Any]]):
     # return [[x[i] for x in m] for i in range(len(m))][::-1]
     return list(list(x) for x in zip(*m))[::-1]
 
+inpb = [[x1 for x1 in x] for x in inp[:-1]]
+
+for x in inpb:
+    print(x)
+
+print("----")
+a = matrix_turn_90(inpb)
+for x in a:
+    print(x)
+exit(1)
 
 def splitweird(s: str) -> list[str]:
     o: list[str] = []
@@ -59,7 +69,11 @@ for x in range(len(nums)):
     for x1 in ind_nums_str:
         print(x1)
 
-    print(matrix_turn_90(ind_nums_str))
+    rot = matrix_turn_90(ind_nums_str)
+
+    print(rot)
+    fi = [int("".join(x1).strip()) for x1 in rot]
+    print(fi)
 
     print("----")
 
