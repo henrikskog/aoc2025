@@ -47,7 +47,7 @@ def eq(nums: list[int], op: str) -> int:
     if op == "*":
         r = reduce(lambda x, y: x * y, nums, 1)
     elif op == "+":
-        r = reduce(lambda x, y: x + y, nums, 1)
+        r = reduce(lambda x, y: x + y, nums, 0)
     elif op == "-":
         raise Exception("what -")
     elif op == "/":
