@@ -26,7 +26,7 @@ def splitweird(s: str) -> list[str]:
     return o
 
 ops = splitweird(inp[-1])
-print("ops", ops)
+# print("ops", ops)
 nums: list[list[int]] = []
 # for x in range(len(inp)-1):
 #     for x1 in range(len(ops)):
@@ -35,12 +35,12 @@ nums: list[list[int]] = []
 for x in range(len(inp)-1):
     nums.append([int(x) for x in splitweird(inp[x])])
 
-print("nums", nums)
+# print("nums", nums)
 nums = matrix_turn_90(nums)
-print(nums)
 nums.reverse()
+print(nums)
 
-groups: list[Tuple[str, list[int]]] = [(ops[x], nums[x]) for x in range(len(inp[:-1]))]
+groups: list[Tuple[str, list[int]]] = [(ops[x], nums[x]) for x in range(len(ops))]
 
 def eq(nums: list[int], op: str) -> int:
     r = 0
@@ -57,8 +57,6 @@ def eq(nums: list[int], op: str) -> int:
 
     print("eq", nums, op, r)
     return r
-
-
 
 t = sum([eq(x[1],x[0]) for x in groups])
 print(t)
