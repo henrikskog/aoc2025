@@ -1,59 +1,96 @@
-inp = [x.strip() for x in open("day-5/input1.txt").readlines()] # same input part 2
+from functools import reduce
+from typing import Tuple, Any
+inp = [x.strip() for x in open("day-6/example.txt").readlines()]
 
-r: list[list[int]] = []
+print("leny", len(inp))
+print("lenx", len(inp[0]))
 
-print(inp)
-
-fi = 0
-
-for _x in range(len(inp)):
-    x = inp[_x]
-    if x == '':
-        fi = _x+1
-        break
-    _a = x.split("-")
-    f = int(_a[0])
-    t = int(_a[1])
-
-    r.append([f, t])
+# https://stackoverflow.com/a/68188419
+def matrix_turn_90(m: list[list[Any]]):
+    # return [[x[i] for x in m] for i in range(len(m))][::-1]
+    return list(list(x) for x in zip(*m))[::-1]
 
 
-print(r)
-r = sorted(r, key=lambda x: x[0])
-print(r)
+def splitweird(s: str) -> list[str]:
+    o: list[str] = []
+    g: list[str] = []
+    for x in s:
+        if x == " " or x == "\t":
+            if len(g) != 0:
+                o.append("".join(g))
+                g = []
+            continue
+        g.append(x)
+    if len(g) != 0:
+        o.append("".join(g))
+    return o
 
-def overlap(r1: list[int], r2: list[int]):
-    if (r2[0] > r1[1] and r2[1] > r1[1]) or (r1[0] > r2[1] and r1[1]> r2[1]):
-        return False
-    return True
+ops = splitweird(inp[-1])
+# print("ops", ops)
+nums: list[list[int]] = []
+# for x in range(len(inp)-1):
+#     for x1 in range(len(ops)):
+#         nums[x1].append(inp[x][x1])
 
-print("opt")
-x = 0
-while x < len(r)-1:
-    while True:
-            if x == len(r) - 1:
-                break
-            elif overlap(r[x], r[x+1]):
-                # print("overlap", r[x], r[x+1])
-                # print(r)
-                n = [r[x][0], max(r[x][1], r[x+1][1])]
-                # print(n)
-                r.insert(x+2, n)
-                # print(r)
-                r.pop(x)
-                # print(r)
-                r.pop(x)
-                # print(r)
-            else:
-                break
-    x+=1
-    print("x", x)
+for x in range(len(inp)-1):
+    nums.append([int(x) for x in splitweird(inp[x])])
 
+# print("nums", nums)
+nums = matrix_turn_90(nums)
+nums.reverse()
+print(nums)
+
+weird_nums = []
 
 t = 0
-for x in r:
-    t += x[1] - x[0]+1
-        
+for x in range(len(nums)):
+    r = []
+    ind_nums = nums[x]
+
+    longest = max([len(str(x1)) for x1 in ind_nums])
+
+
+    ind_nums_str: list[list[str]] = []
+    for x1 in range(len(ind_nums)):
+        # if len(str(ind_nums[x1])) < longest:
+        n = [str(x2) for x2 in str(ind_nums[x1])] + [" " for x in range(longest-len(str(ind_nums[x1])))]
+        ind_nums_str.append(n)
+
+    for x1 in ind_nums_str:
+        print(x1)
+
+    print(matrix_turn_90(ind_nums_str))
+
+    print("----")
+
+    # for x1 in range(longest):
+    #     for x2 in range(len(inp)-1):
+    #         n = ind_nums[x1]
+    #         if len(str())
+    #         r.append(ind_nums[x2][longest-x1])
+
+
+
+
+
+
+groups: list[Tuple[str, list[int]]] = [(ops[x], nums[x]) for x in range(len(ops))]
+
+def eq(nums: list[int], op: str) -> int:
+    r = 0
+    if op == "*":
+        r = reduce(lambda x, y: x * y, nums, 1)
+    elif op == "+":
+        r = reduce(lambda x, y: x + y, nums, 0)
+    elif op == "-":
+        raise Exception("what -")
+    elif op == "/":
+        raise Exception("what /")
+    else:
+        raise Exception("what" + op)
+
+    print("eq", nums, op, r)
+    return r
+
+t = sum([eq(x[1],x[0]) for x in groups])
 print(t)
-
-
