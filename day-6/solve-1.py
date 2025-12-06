@@ -1,61 +1,64 @@
-inp = [x.strip() for x in open("day-5/input1.txt").readlines()]
+from functools import reduce
+from typing import Tuple
+inp = [x.strip() for x in open("day-6/input1.txt").readlines()]
 
-r: list[list[int]] = []
+print("leny", len(inp))
+print("lenx", len(inp[0]))
 
-print(inp)
-
-fi = 0
-
-for _x in range(len(inp)):
-    x = inp[_x]
-    if x == '':
-        fi = _x+1
-        break
-    _a = x.split("-")
-    f = int(_a[0])
-    t = int(_a[1])
-
-    r.append([f, t])
+# https://stackoverflow.com/a/68188419
+def matrix_turn_90(m: list[list[int]]):
+    # return [[x[i] for x in m] for i in range(len(m))][::-1]
+    return list(list(x) for x in zip(*m))[::-1]
 
 
-print(r)
-r = sorted(r, key=lambda x: x[0])
-print(r)
+def splitweird(s: str) -> list[str]:
+    o: list[str] = []
+    g: list[str] = []
+    for x in s:
+        if x == " " or x == "\t":
+            if len(g) != 0:
+                o.append("".join(g))
+                g = []
+            continue
+        g.append(x)
+    if len(g) != 0:
+        o.append("".join(g))
+    return o
 
-# print("opt")
-# x = 0
-# while x < len(r)-1:
-#     if r[x+1][0] <= r[x][1]:
-#         # print("overlap", r[x], r[x+1])
-#         # print(r)
-#         n = [r[x][0], r[x+1][1]]
-#         # print(n)
-#         r.insert(x+2, n)
-#         # print(r)
-#         r.pop(x)
-#         # print(r)
-#         r.pop(x)
-#         # print(r)
-#     x+=1
+ops = splitweird(inp[-1])
+print("ops", ops)
+nums: list[list[int]] = []
+# for x in range(len(inp)-1):
+#     for x1 in range(len(ops)):
+#         nums[x1].append(inp[x][x1])
+
+for x in range(len(inp)-1):
+    nums.append([int(x) for x in splitweird(inp[x])])
+
+print("nums", nums)
+nums = matrix_turn_90(nums)
+print(nums)
+nums.reverse()
+
+groups: list[Tuple[str, list[int]]] = [(ops[x], nums[x]) for x in range(len(inp[:-1]))]
+
+def eq(nums: list[int], op: str) -> int:
+    r = 0
+    if op == "*":
+        r = reduce(lambda x, y: x * y, nums, 1)
+    elif op == "+":
+        r = reduce(lambda x, y: x + y, nums, 1)
+    elif op == "-":
+        raise Exception("what -")
+    elif op == "/":
+        raise Exception("what /")
+    else:
+        raise Exception("what" + op)
+
+    print("eq", nums, op, r)
+    return r
 
 
-t = 0
-for x in range(fi, len(inp)):
-    val = int(inp[x].strip())
-    # print(val)
-    fresh = False
 
-    for ran in r:
-        # print(val, ran[0], ran[1])
-        if val >= ran[0] and val <= ran[1]:
-            # print("fresh")
-            fresh = True
-            break
-
-    if fresh:
-        t += 1
-
-        
+t = sum([eq(x[1],x[0]) for x in groups])
 print(t)
-
-
